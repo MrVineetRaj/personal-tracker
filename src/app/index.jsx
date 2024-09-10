@@ -19,9 +19,10 @@ const index = () => {
     getToken().then((token) => {
       if (token) {
         getUser(token).then((res) => {
+          console.log(res.user);
           dispatch(setToken(token));
           dispatch(setUser(res.user));
-          router.replace("/finance");
+          router.replace("/home");
         });
       }
     });

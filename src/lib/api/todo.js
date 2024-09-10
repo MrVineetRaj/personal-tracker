@@ -6,8 +6,7 @@ const createTodo = async (token, todo) => {
       `${API_URL}/todo/create-todo?token=${token}`,
       todo
     );
-    console.log("From Add todo = > ", res.data);
-
+    
     return res.data;
   } catch (error) {
     console.error(error);
@@ -17,7 +16,7 @@ const createTodo = async (token, todo) => {
 const fetchTodos = async (token) => {
   try {
     const res = await axios.get(`${API_URL}/todo/get-all-todo?token=${token}`);
-    console.log(res.data);
+    
     if (res.data.status === 200) {
       return res.data.data;
     }
@@ -32,7 +31,7 @@ const fetchOneTodo = async (token, id) => {
     const res = await axios.get(
       `${API_URL}/todo/get-todo?todo_id=${id}&token=${token}`
     );
-    console.log(res.data);
+    
     return res.data;
   } catch (error) {
     console.error(error);
@@ -45,7 +44,7 @@ const updateTodo = async (token, todo, todo_id) => {
       `${API_URL}/todo/update-todo?token=${token}&todo_id=${todo_id}`,
       todo
     );
-    console.log(res.data);
+    
     return res.data;
   } catch (error) {
     console.error(error);

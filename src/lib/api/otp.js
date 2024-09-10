@@ -7,17 +7,14 @@ const sendOtp = async (data) => {
 };
 
 const verifyOtp = async (data) => {
-  console.log("From verifyOtp => ", data);
-
   try {
     const response = await axios.delete(
       `${API_URL}/otp/verify-otp?email=${data.email}&otp=${data.otp}`,
       data
     );
-    console.log("From verifyOtp response => ", response.data);
+
     return response.data;
   } catch (e) {
-    console.log(e);
     return e.response.data;
   }
 };

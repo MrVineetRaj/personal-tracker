@@ -60,7 +60,7 @@ const TodoPage = () => {
     });
   };
 
-  console.log(query);
+  
   return (
     <SafeAreaView className="bg-primary h-full p-4">
       <ProfileHeader />
@@ -140,7 +140,7 @@ const TodoPage = () => {
                     display="default" // Display mode can be "default", "spinner", "calendar" (Android)
                     onChange={(event, selectedDate) => {
                       setShowDatePicker(false);
-                      console.log(selectedDate);
+                      
                       setTodo({
                         ...todo,
                         dueDate: selectedDate,

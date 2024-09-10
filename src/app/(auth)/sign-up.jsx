@@ -18,7 +18,7 @@ const SignUp = () => {
   const [otp, setOtp] = useState("");
 
   const handleSendOtp = async () => {
-    console.log(form);
+    
     setSendingOtp(true);
 
     const tempData = {
@@ -44,8 +44,8 @@ const SignUp = () => {
     };
 
     const res = await verifyOtp(verifyOtpData);
-    console.log(res);
-
+    
+    
     if (res.status === 200) {
       handleSignUp();
       return;
@@ -59,7 +59,7 @@ const SignUp = () => {
     const res = await signUp(form);
 
     if (res.status === 200) {
-      console.log(res);
+      
       Alert.alert("Success", "User created successfully");
       return;
     }
@@ -121,7 +121,7 @@ const SignUp = () => {
             placeholder="Enter OTP"
             value=""
             handleChangeText={(e) => {
-              console.log(otp);
+              
               setOtp(e);
             }}
             textStyles="text-white"

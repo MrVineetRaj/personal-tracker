@@ -7,7 +7,7 @@ const InfoBox = ({
   containerColor = "bg-secondary-100",
   textStyles = "",
 }) => {
-  console.log("InfoBox", title, subtitle, containerColor);
+  
   return (
     <View
       className={

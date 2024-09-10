@@ -41,7 +41,7 @@ const AddTodo = () => {
 
   const handleAddTodo = async () => {
     const res = await createTodo(token, form);
-    console.log("From add todo page =>", res);
+    
     if (res.status === 200) {
       Alert.alert("Todo added successfully");
       setForm({
@@ -100,7 +100,7 @@ const AddTodo = () => {
               display="default" // Display mode can be "default", "spinner", "calendar" (Android)
               onChange={(event, selectedDate) => {
                 setShowDatePicker(false);
-                console.log(selectedDate);
+                
                 setForm({
                   ...form,
                   dueDate: selectedDate,

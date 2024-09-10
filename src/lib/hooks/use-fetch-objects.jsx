@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Alert } from "react-native";
 
-const useFetchArray = (fn) => {
-  const [data, setData] = useState([]);
+const useFetchObject = (fn) => {
+  const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -13,8 +13,7 @@ const useFetchArray = (fn) => {
     setIsLoading;
     try {
       const res = await fn();
-      
-      //   Alert.alert("Data fetched successfully");
+      console.log(res);
 
       setData(res);
     } catch (error) {
@@ -32,4 +31,4 @@ const useFetchArray = (fn) => {
   return { data, refetch, isLoading };
 };
 
-export default useFetchArray;
+export default useFetchObject;

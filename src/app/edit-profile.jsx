@@ -63,7 +63,7 @@ const EditProfilePage = () => {
           title="Save"
           containerStyles="py-4 w-full mt-4"
           textStyles="text-lg font-psemibold text-white"
-          handlePress={() => console.log(form)}
+          handlePress={() => {}}
         />
       </View>
     </SafeAreaView>

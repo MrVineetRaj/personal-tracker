@@ -80,10 +80,21 @@ const RootLayout = () => {
             headerShown: false,
           }}
         />
+        <Stack.Screen
+          name="add-meal/[query]"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="all-nutrients"
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack>
     </Provider>
   );
-  
 };
 
 export default RootLayout;
