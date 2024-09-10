@@ -6,7 +6,7 @@ const FinanceTransactionCard = ({ transaction }) => {
     <View className="flex-row items-center justify-between w-full">
       <View>
         <Text className="text-white font-psemibold text-base">
-          {transaction.title}
+          {transaction.reason}
         </Text>
         <Text className="text-gray-100 font-pregular">{transaction.date}</Text>
       </View>

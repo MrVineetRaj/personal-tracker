@@ -31,4 +31,6 @@ const fetchAllMeals = async (token) => {
   }
 };
 
+
+
 export { addMeal, fetchAllMeals };

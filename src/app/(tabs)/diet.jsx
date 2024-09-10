@@ -46,17 +46,24 @@ const Diet = () => {
     const height = parseFloat(
       user?.physical?.height[user?.physical?.height.length - 1].value.split(
         " "
-      )[0] /100
+      )[0] / 100
     );
 
     if (!isNaN(weight) && !isNaN(height) && height !== 0) {
       const bmi = (weight / height ** 2).toFixed(3);
-      console.log("bmi => ", bmi,"\nweight => ", weight, "\nheight => ", height);
+      console.log(
+        "bmi => ",
+        bmi,
+        "\nweight => ",
+        weight,
+        "\nheight => ",
+        height
+      );
       setBmi(parseFloat(bmi));
     } else {
       setBmi(0); // Handle invalid or missing data
     }
-  }, [user]);
+  }, [user, token]);
 
   useEffect(() => {
     if (!mealsData) return;
@@ -105,7 +112,6 @@ const Diet = () => {
                 containerColor="bg-green-400 flex-[0.5] mr-4"
                 textStyles="text-center"
               />
-
               <InfoBox
                 subtitle="BMI"
                 title={bmi}

@@ -1,22 +1,37 @@
-import { View, Text, Image, Dimensions, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  Dimensions,
+  ScrollView,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LineChart } from "react-native-chart-kit";
 
-import { useSelector } from "react-redux";
-import { images } from "../constants";
+import { useDispatch, useSelector } from "react-redux";
+import { images, icons } from "../constants";
 import InfoBox from "../components/info-box";
 import { router } from "expo-router";
 import { data_for_profile_graph } from "../lib/utility/data_for_graph";
+import UpdatePhysicalAttribute from "../components/profile/update-physical-atrribute";
+import { removeToken } from "../lib/jwt-token";
+import { setToken } from "../lib/slices/tokenSlice";
+import { setUser } from "../lib/slices/userSlice";
+import { logOut } from "../lib/api/user";
 
 const ProfilePage = () => {
   const user = useSelector((state) => state.user);
+  const token = useSelector((state) => state.token.token);
+  const dispatch = useDispatch();
   const [graphData, setGraphData] = useState({});
   const [bmi, setBmi] = useState(0);
-
+  const [loading, setLoading] = useState(false);
   const [updatingPhysical, setUpdatingPhysical] = useState({
-    value: true,
-    attribute: "weight",
+    isOpen: false,
+    attribute: "",
   });
   useEffect(() => {
     const weight = parseInt(
@@ -82,7 +97,24 @@ const ProfilePage = () => {
     useShadowColorFromDataset: false, // optional
   };
 
-  // console.log(user);
+  const handleLogout = async () => {
+    setLoading(true);
+    const res = await logOut(token);
+
+    if (res.status === 200) {
+      dispatch(setUser({}));
+      dispatch(setToken(""));
+      await removeToken();
+      Alert.alert("Success", res.message);
+      setLoading(false);
+      router.replace("/sign-in");
+      return;
+    }
+
+    setLoading(false);
+    Alert.alert("Error", res.message);
+  };
+
   return (
     <SafeAreaView className="bg-primary h-full p-4">
       <ScrollView>
@@ -90,7 +122,21 @@ const ProfilePage = () => {
           <Text className="text-white text-2xl font-psemibold">
             Personal Tracker
           </Text>
-          <View className="w-16 h-16 rounded-full overflow-hidden">
+
+          <TouchableOpacity
+            onPress={() => {
+              handleLogout();
+            }}
+          >
+            <Image
+              source={icons.logout}
+              className="w-6 h-6"
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+        </View>
+        <View className="flex-row justify-between items-center">
+          <View className="w-16 h-16 rounded-full overflow-hidden my-4">
             {user?.avatar ? (
               <Image source={{ uri: user?.avatar }} />
             ) : (
@@ -101,15 +147,6 @@ const ProfilePage = () => {
               />
             )}
           </View>
-        </View>
-        <View className="flex-row items-center justify-between">
-          <View>
-            <Text className="text-white font-psemibold text-base">
-              {user?.name}
-            </Text>
-            <Text className="text-gray-100 font-pmedium  ">{user?.email}</Text>
-          </View>
-
           <Text
             className="text-gray-100 font-pmedium"
             onPress={() => {
@@ -119,25 +156,60 @@ const ProfilePage = () => {
             Edit Profile
           </Text>
         </View>
+        <View className="flex-row items-center justify-between">
+          <View>
+            <Text className="text-white font-psemibold text-base">
+              {user?.name}
+            </Text>
+            <Text className="text-gray-100 font-pmedium  ">{user?.email}</Text>
+          </View>
+        </View>
 
         <View className="flex-row w-full mt-4">
-          <InfoBox
-            title={`${
-              user?.physical?.height[user?.physical?.height.length - 1].value
-            }`}
-            // title="180 cm"
-            containerColor="bg-green-400 flex-[0.5] mr-4"
-            subtitle="Height"
-            textStyles="text-black"
-          />
-          <InfoBox
-            title={`${
-              user?.physical?.weight[user?.physical?.weight.length - 1].value
-            }`}
-            // title="70 kg"
-            containerColor="bg-secondary-100 flex-[0.5]"
-            subtitle="Weight"
-          />
+          <TouchableOpacity
+            className="flex-[0.5] mr-4"
+            onPress={() => {
+              setUpdatingPhysical({
+                isOpen: !updatingPhysical.isOpen,
+                attribute: "height",
+              });
+            }}
+          >
+            <InfoBox
+              title={`${
+                user?.physical?.height[user?.physical?.height.length - 1].value
+              }`}
+              // title="180 cm"
+              containerColor="bg-green-400"
+              subtitle="Height"
+              textStyles="text-black"
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            className="flex-[0.5]"
+            onPress={() => {
+              setUpdatingPhysical({
+                isOpen: !updatingPhysical.isOpen,
+                attribute: "weight",
+              });
+            }}
+          >
+            <InfoBox
+              title={`${
+                user?.physical?.weight[user?.physical?.weight.length - 1].value
+              }`}
+              // title="70 kg"
+              containerColor="bg-secondary-100"
+              subtitle="Weight"
+            />
+          </TouchableOpacity>
+
+          {updatingPhysical.isOpen && (
+            <UpdatePhysicalAttribute
+              attribute={updatingPhysical.attribute}
+              setUpdatingPhysical={setUpdatingPhysical}
+            />
+          )}
         </View>
         <InfoBox
           title={bmi}
@@ -152,7 +224,7 @@ const ProfilePage = () => {
           textStyles="text-black text-center"
         />
 
-        {graphData?.weight && (
+        {graphData?.weight?.datasets[0]?.data?.length > 1 && (
           <LineChart
             data={graphData.weight}
             width={screenWidth}

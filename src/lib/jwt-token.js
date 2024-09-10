@@ -23,5 +23,12 @@ const getToken = async () => {
   return null;
 };
 
+const removeToken = async () => {
+  try {
+    await AsyncStorage.removeItem("@user_token");
+  } catch (error) {
+    console.error("Failed to remove token", error);
+  }
+};
 
-export { storeToken, getToken };
+export { storeToken, getToken, removeToken };

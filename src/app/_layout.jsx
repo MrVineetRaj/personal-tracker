@@ -31,6 +31,8 @@ const RootLayout = () => {
     }
   }, [fontsLoaded, error]);
 
+  useEffect(() => {}, []);
+
   if (!fontsLoaded && !error) {
     return null;
   }
@@ -88,6 +90,19 @@ const RootLayout = () => {
         />
         <Stack.Screen
           name="all-nutrients"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="unauthenticated"
+          options={{
+            headerShown: false,
+          }}
+        />
+
+        <Stack.Screen
+          name="add-transaction/[query]"
           options={{
             headerShown: false,
           }}

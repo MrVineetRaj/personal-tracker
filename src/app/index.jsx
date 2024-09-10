@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, Alert } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "../components/ui/CustomButton";
@@ -18,11 +18,18 @@ const index = () => {
   useEffect(() => {
     getToken().then((token) => {
       if (token) {
+        if (token === "undefined") {
+          return;
+        }
         getUser(token).then((res) => {
-          console.log(res.user);
-          dispatch(setToken(token));
-          dispatch(setUser(res.user));
-          router.replace("/home");
+          if (res.status === 200) {
+            dispatch(setToken(token));
+            dispatch(setUser(res.user));
+            router.replace("/home");
+            return;
+          }
+
+          Alert.alert("Session Expired", "Please login again");
         });
       }
     });
@@ -31,7 +38,7 @@ const index = () => {
     <SafeAreaView className="h-full items-center justify-center bg-primary">
       <View className="items-center">
         <Text className="text-white font-pextrabold text-5xl">Personal</Text>
-        <Text className="text-white font-pextrabold text-5xl">Coach</Text>
+        <Text className="text-white font-pextrabold text-5xl">Tracker</Text>
       </View>
       <View className="items-center">
         <Text className="text-gray-100 font-pregular text-base text-center px-4">
@@ -39,7 +46,7 @@ const index = () => {
           Here you can track all your important utilities like Finance , Calorie
           , Todo etc at{" "}
           <Text className="text-secondary-100 font-psemibold text-lg">
-            Personal Guide
+            Personal Tracker
           </Text>
         </Text>
       </View>
