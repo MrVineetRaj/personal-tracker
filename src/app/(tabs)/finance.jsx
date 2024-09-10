@@ -40,7 +40,7 @@ const finance = () => {
         (acc, curr) => acc + curr.amount,
         0
       );
-      console.log(transactions)
+
       setNet({ earning, expanse });
     }
   }, [transactions, user]);
@@ -64,6 +64,13 @@ const finance = () => {
           containerColor="bg-red-400 flex-[0.5]"
         />
       </View>
+
+      <InfoBox
+        title={net.earning - net.expanse + " rs"}
+        subtitle="Net Balance"
+        textStyles="text-white text-center"
+        containerColor="bg-green-400"
+      />
 
       <View className="flex-row items-center justify-around mt-4">
         {Object.keys(transactionType).map((type) => (

@@ -9,7 +9,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { fetchOneTodo, updateTodo } from "../../lib/api/todo";
+import { deleteTodo, fetchOneTodo, updateTodo } from "../../lib/api/todo";
 import { useSelector } from "react-redux";
 import Tag from "../../components/tag";
 import ProfileHeader from "../../components/profile-header";
@@ -27,8 +27,7 @@ const TodoPage = () => {
 
   useEffect(() => {
     fetchOneTodo(token, query).then((res) => {
-      // console.log(res);
-
+      console.log(res.todo);
       if (res.status === 200) {
         const todoData = res.todo;
         // Convert date string to Date object
@@ -44,7 +43,6 @@ const TodoPage = () => {
 
   const handleUpdateTodo = () => {
     setSavingTodo(true);
-
     updateTodo(token, todo, query).then((res) => {
       setSavingTodo(false);
       if (res.status === 200) {
@@ -60,7 +58,43 @@ const TodoPage = () => {
     });
   };
 
-  
+  const handleMarkAsCompleted = () => {
+    setSavingTodo(true);
+    const todoData = {
+      ...todo,
+      isCompleted: true,
+    };
+
+    updateTodo(token, todoData, query).then((res) => {
+      setSavingTodo(false);
+      if (res.status === 200) {
+        setTodo(res.todo);
+        Alert.alert("Success", "Todo updated successfully");
+        router.replace("/todo");
+        setIsUpdating(false);
+        return;
+      }
+
+      setIsUpdating(false);
+      Alert.alert("Error", res.message);
+    });
+  };
+
+  const handleDeleteTodo = async () => {
+    setSavingTodo(true);
+
+    await deleteTodo(token, query).then((res) => {
+      setSavingTodo(false);
+      if (res.status === 200) {
+        Alert.alert("Success", res.message);
+        router.replace("/todo");
+        return;
+      }
+
+      Alert.alert("Error", res.message);
+    });
+  };
+
   return (
     <SafeAreaView className="bg-primary h-full p-4">
       <ProfileHeader />
@@ -89,6 +123,25 @@ const TodoPage = () => {
               {todo?.description}
             </Text>
           </View>
+
+          <CustomButton
+            title={"Task Completed"}
+            containerStyles="mt-4 py-4"
+            textStyles="text-white font-psemibold text-base"
+            handlePress={() => {
+              handleMarkAsCompleted();
+            }}
+            isLoading={savingTodo}
+          />
+          <CustomButton
+            title={"Delete Task"}
+            containerStyles="mt-4 py-4 bg-red-400"
+            textStyles="text-white font-psemibold text-base"
+            handlePress={() => {
+              handleDeleteTodo();
+            }}
+            isLoading={savingTodo}
+          />
         </View>
       )}
 
@@ -140,7 +193,7 @@ const TodoPage = () => {
                     display="default" // Display mode can be "default", "spinner", "calendar" (Android)
                     onChange={(event, selectedDate) => {
                       setShowDatePicker(false);
-                      
+
                       setTodo({
                         ...todo,
                         dueDate: selectedDate,

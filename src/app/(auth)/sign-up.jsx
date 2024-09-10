@@ -108,7 +108,7 @@ const SignUp = () => {
               handleSendOtp();
             }}
             containerStyles="mt-4"
-            textStyles="text-lg text-white font-pbold"
+            textStyles="text-lg text-white font-pbold py-4"
             isLoading={sendingOtp}
           />
         </View>
@@ -121,7 +121,6 @@ const SignUp = () => {
             placeholder="Enter OTP"
             value=""
             handleChangeText={(e) => {
-              
               setOtp(e);
             }}
             textStyles="text-white"
@@ -133,7 +132,7 @@ const SignUp = () => {
               handleVerifyOtp();
             }}
             containerStyles="mt-4"
-            textStyles="text-lg text-white font-pbold"
+            textStyles="text-lg text-white font-pbold py-4"
             isLoading={verifyingOtp}
           />
         </View>

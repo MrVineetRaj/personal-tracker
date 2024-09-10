@@ -3,11 +3,12 @@ import { API_URL } from "@env";
 import { Alert } from "react-native";
 
 const addTransaction = async (token, transaction) => {
-  console.log("Transaction => ", transaction);
+  
   const response = await axios.post(
     `${API_URL}/finance/add-transaction?token=${token}`,
     transaction
   );
+
   return response.data;
 };
 
@@ -19,6 +20,7 @@ const getTransactions = async (token) => {
   if (response.data.status !== 200) {
     Alert.alert("Error", response.data.message);
   }
+
   return response.data.data;
 };
 

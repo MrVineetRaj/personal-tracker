@@ -39,26 +39,19 @@ const Diet = () => {
 
   useEffect(() => {
     const weight = parseInt(
-      user?.physical?.weight[user?.physical?.weight.length - 1].value.split(
+      user?.physical?.weight[user?.physical?.weight.length - 1]?.value.split(
         " "
       )[0]
-    );
+    ) || 0;
     const height = parseFloat(
-      user?.physical?.height[user?.physical?.height.length - 1].value.split(
+      user?.physical?.height[user?.physical?.height.length - 1]?.value.split(
         " "
       )[0] / 100
-    );
+    ) || 0;
 
     if (!isNaN(weight) && !isNaN(height) && height !== 0) {
       const bmi = (weight / height ** 2).toFixed(3);
-      console.log(
-        "bmi => ",
-        bmi,
-        "\nweight => ",
-        weight,
-        "\nheight => ",
-        height
-      );
+      
       setBmi(parseFloat(bmi));
     } else {
       setBmi(0); // Handle invalid or missing data
@@ -67,7 +60,7 @@ const Diet = () => {
 
   useEffect(() => {
     if (!mealsData) return;
-    console.log(mealsData.breakfast);
+    
     const nutrients = preProcessingNutrients(mealsData);
 
     dispatch(setDiet(nutrients));
@@ -106,8 +99,7 @@ const Diet = () => {
               <InfoBox
                 subtitle="Weight"
                 title={
-                  user?.physical?.weight[user?.physical?.weight.length - 1]
-                    .value
+                  user?.physical?.weight[user?.physical?.weight.length - 1]?.value || 0
                 }
                 containerColor="bg-green-400 flex-[0.5] mr-4"
                 textStyles="text-center"
@@ -142,12 +134,12 @@ const Diet = () => {
               </Text>
             </View>
             <View className="mt-4 flex-row justify-around">
-              {meals?.map((meal) => (
+              {meals?.map((meal,index) => (
                 <Text
-                  key={meal.value}
-                  onPress={() => setActiveMeal(meal.value)}
+                  key={index}
+                  onPress={() => setActiveMeal(meal?.value)}
                   className={`text-white text-base font-psemibold ${
-                    activeMeal === meal.value ? "text-secondary-100" : ""
+                    activeMeal === meal?.value ? "text-secondary-100" : ""
                   }`}
                 >
                   {meal.label}

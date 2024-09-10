@@ -13,7 +13,7 @@ const useFetchObject = (fn) => {
     setIsLoading;
     try {
       const res = await fn();
-      console.log(res);
+      
 
       setData(res);
     } catch (error) {

@@ -32,7 +32,7 @@ const todo = () => {
     refetch();
   }, []);
 
-  // console.log(todos);
+  
   return (
     <SafeAreaView className="h-full bg-primary p-4">
       <ProfileHeader />

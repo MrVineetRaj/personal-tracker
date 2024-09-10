@@ -6,7 +6,7 @@ const createTodo = async (token, todo) => {
       `${API_URL}/todo/create-todo?token=${token}`,
       todo
     );
-    
+
     return res.data;
   } catch (error) {
     console.error(error);
@@ -16,7 +16,7 @@ const createTodo = async (token, todo) => {
 const fetchTodos = async (token) => {
   try {
     const res = await axios.get(`${API_URL}/todo/get-all-todo?token=${token}`);
-    
+
     if (res.data.status === 200) {
       return res.data.data;
     }
@@ -31,7 +31,7 @@ const fetchOneTodo = async (token, id) => {
     const res = await axios.get(
       `${API_URL}/todo/get-todo?todo_id=${id}&token=${token}`
     );
-    
+
     return res.data;
   } catch (error) {
     console.error(error);
@@ -44,11 +44,22 @@ const updateTodo = async (token, todo, todo_id) => {
       `${API_URL}/todo/update-todo?token=${token}&todo_id=${todo_id}`,
       todo
     );
-    
+
     return res.data;
   } catch (error) {
     console.error(error);
   }
 };
 
-export { createTodo, fetchTodos, fetchOneTodo, updateTodo };
+const deleteTodo = async (token, todo_id) => {
+  try {
+    const res = await axios.delete(
+      `${API_URL}/todo/delete-todo?token=${token}&todo_id=${todo_id}`
+    );
+
+    return res.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+export { createTodo, fetchTodos, fetchOneTodo, updateTodo, deleteTodo };

@@ -19,9 +19,7 @@ const data_for_profile_graph = (weight, height) => {
     data: height_data,
   };
 
-  console.log("weight => ", weight_dataset.data);
-  console.log("height => ", height_dataset);
-
+  
   return { weight_dataset, height_dataset };
 };
 

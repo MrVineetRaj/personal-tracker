@@ -15,7 +15,6 @@ const signUp = async (data) => {
 const getUser = async (token) => {
   const response = await axios.get(`${API_URL}/user/get-user?token=${token}`);
 
-  console.log("From get user => ", response.data);
   return response.data;
 };
 
@@ -24,7 +23,7 @@ const updateUserPhysical = async (data, token) => {
     `${API_URL}/user/update-physical-details?token=${token}`,
     data
   );
-  console.log("user from update attribute => ", response.data);
+  
   return response.data;
 };
 
@@ -39,9 +38,9 @@ const signIn = async (data) => {
 };
 
 const logOut = async (token) => {
-  console.log("From logout => ", token);
+  
   const response = await axios.delete(`${API_URL}/user/log-out?token=${token}`);
-  console.log("From logout => ", response.data);
+  
   return response.data;
 };
 

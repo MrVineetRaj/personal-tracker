@@ -38,7 +38,7 @@ const AddMeal = () => {
     const currentDate = new Date();
     currentDate.setHours(0, 0, 0, 0);
 
-    console.log(currentDate.toDateString());
+    
 
     setForm({ ...form, date: currentDate.toDateString() });
     setAddingMeal(true);

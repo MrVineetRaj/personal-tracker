@@ -15,8 +15,7 @@ const UpdatePhysicalAttribute = ({ attribute, setUpdatingPhysical }) => {
   const handleUpdate = async () => {
     setUpdating(true);
     const currentDate = new Date().toISOString().split("T")[0];
-    console.log("Current Date => ", currentDate);
-
+    
     const res = await updateUserPhysical(
       {
         [attribute]: { value: value, date: currentDate },

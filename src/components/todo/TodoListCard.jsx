@@ -3,10 +3,12 @@ import React from "react";
 import Tag from "../tag";
 import { router } from "expo-router";
 const TodoListCard = ({ todo }) => {
-  // console.log(todo);
   return (
     <TouchableOpacity
-      className="bg-secondary w-full p-4 my-1 flex-row justify-between rounded-md"
+      className={
+        (todo?.isCompleted ? "bg-secondary-100" : "bg-primary ") +
+        " w-full p-4 my-1 flex-row justify-between rounded-md"
+      }
       onPress={() => {
         router.push(`/todo/${todo?._id}`);
       }}

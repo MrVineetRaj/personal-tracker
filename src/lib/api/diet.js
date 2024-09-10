@@ -9,7 +9,7 @@ const addMeal = async (mealData, token, meal) => {
       mealData
     );
 
-    console.log(meal);
+    
     Alert.alert("Success", response.data.message);
 
     return response.data;
@@ -20,7 +20,7 @@ const addMeal = async (mealData, token, meal) => {
 
 const fetchAllMeals = async (token) => {
   const currentData = new Date();
-  // console.log(currentData.toISOString().split("T")[0]);
+  
   try {
     const response = await axios.get(
       `${API_URL}/diet/get-meals?token=${token}&date=${currentData.toISOString()}`

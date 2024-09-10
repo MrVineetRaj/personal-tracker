@@ -35,12 +35,12 @@ const ProfilePage = () => {
   });
   useEffect(() => {
     const weight = parseInt(
-      user?.physical?.weight[user?.physical?.weight.length - 1].value.split(
+      user?.physical?.weight[user?.physical?.weight.length - 1]?.value?.split(
         " "
       )[0]
     );
     const height = parseFloat(
-      user?.physical?.height[user?.physical?.height.length - 1].value.split(
+      user?.physical?.height[user?.physical?.height.length - 1]?.value?.split(
         " "
       )[0] / 100
     );
@@ -117,7 +117,7 @@ const ProfilePage = () => {
 
   return (
     <SafeAreaView className="bg-primary h-full p-4">
-      <ScrollView>
+      <ScrollView className="h-full ">
         <View className="flex-row justify-between items-start">
           <Text className="text-white text-2xl font-psemibold">
             Personal Tracker
@@ -165,9 +165,9 @@ const ProfilePage = () => {
           </View>
         </View>
 
-        <View className="flex-row w-full mt-4">
+        <View className="flex-row w-full mt-4 ">
           <TouchableOpacity
-            className="flex-[0.5] mr-4"
+            className="flex-[0.5] mr-4 "
             onPress={() => {
               setUpdatingPhysical({
                 isOpen: !updatingPhysical.isOpen,
@@ -177,7 +177,7 @@ const ProfilePage = () => {
           >
             <InfoBox
               title={`${
-                user?.physical?.height[user?.physical?.height.length - 1].value
+                user?.physical?.height[user?.physical?.height.length - 1]?.value
               }`}
               // title="180 cm"
               containerColor="bg-green-400"
@@ -196,7 +196,7 @@ const ProfilePage = () => {
           >
             <InfoBox
               title={`${
-                user?.physical?.weight[user?.physical?.weight.length - 1].value
+                user?.physical?.weight[user?.physical?.weight.length - 1]?.value
               }`}
               // title="70 kg"
               containerColor="bg-secondary-100"
@@ -213,43 +213,45 @@ const ProfilePage = () => {
         </View>
         <InfoBox
           title={bmi}
-          containerColor="bg-red-400  mt-4"
+          containerColor="bg-red-400 mt-4 static -z-50"
           subtitle="BMI"
           textStyles="text-black text-center"
         />
         <InfoBox
           title={user?.financial?.earning - user?.financial?.expanse}
-          containerColor="bg-yellow-400  mt-4"
+          containerColor="bg-yellow-400  mt-4 static -z-50"
           subtitle="Nt worth"
           textStyles="text-black text-center"
         />
 
-        {graphData?.weight?.datasets[0]?.data?.length > 1 && (
-          <LineChart
-            data={graphData.weight}
-            width={screenWidth}
-            height={220}
-            chartConfig={chartConfig}
-            bezier
-            style={{
-              marginVertical: 8,
-              borderRadius: 16,
-            }}
-          />
-        )}
-        {graphData?.height && (
-          <LineChart
-            data={graphData.height}
-            width={screenWidth}
-            height={220}
-            chartConfig={chartConfig}
-            bezier
-            style={{
-              marginVertical: 8,
-              borderRadius: 16,
-            }}
-          />
-        )}
+        <View className="static -z-50 mt-4">
+          {graphData?.weight?.datasets[0]?.data?.length > 1 && (
+            <LineChart
+              data={graphData.weight}
+              width={screenWidth}
+              height={220}
+              chartConfig={chartConfig}
+              bezier
+              style={{
+                marginVertical: 8,
+                borderRadius: 16,
+              }}
+            />
+          )}
+          {graphData?.height?.datasets[0]?.data?.length > 1 && (
+            <LineChart
+              data={graphData.height}
+              width={screenWidth}
+              height={220}
+              chartConfig={chartConfig}
+              bezier
+              style={{
+                marginVertical: 8,
+                borderRadius: 16,
+              }}
+            />
+          )}
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
