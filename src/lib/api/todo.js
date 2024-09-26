@@ -3,7 +3,7 @@ import { API_URL } from "@env";
 const createTodo = async (token, todo) => {
   try {
     const res = await axios.post(
-      `${API_URL}/todo/create-todo?token=${token}`,
+      `https://personal-guide-backend.onrender.com/todo/create-todo?token=${token}`,
       todo
     );
 
@@ -15,7 +15,9 @@ const createTodo = async (token, todo) => {
 
 const fetchTodos = async (token) => {
   try {
-    const res = await axios.get(`${API_URL}/todo/get-all-todo?token=${token}`);
+    const res = await axios.get(
+      `https://personal-guide-backend.onrender.com/todo/get-all-todo?token=${token}`
+    );
 
     if (res.data.status === 200) {
       return res.data.data;
@@ -29,7 +31,7 @@ const fetchTodos = async (token) => {
 const fetchOneTodo = async (token, id) => {
   try {
     const res = await axios.get(
-      `${API_URL}/todo/get-todo?todo_id=${id}&token=${token}`
+      `https://personal-guide-backend.onrender.com/todo/get-todo?todo_id=${id}&token=${token}`
     );
 
     return res.data;
@@ -41,7 +43,7 @@ const fetchOneTodo = async (token, id) => {
 const updateTodo = async (token, todo, todo_id) => {
   try {
     const res = await axios.patch(
-      `${API_URL}/todo/update-todo?token=${token}&todo_id=${todo_id}`,
+      `https://personal-guide-backend.onrender.com/todo/update-todo?token=${token}&todo_id=${todo_id}`,
       todo
     );
 
@@ -54,7 +56,7 @@ const updateTodo = async (token, todo, todo_id) => {
 const deleteTodo = async (token, todo_id) => {
   try {
     const res = await axios.delete(
-      `${API_URL}/todo/delete-todo?token=${token}&todo_id=${todo_id}`
+      `https://personal-guide-backend.onrender.com/todo/delete-todo?token=${token}&todo_id=${todo_id}`
     );
 
     return res.data;

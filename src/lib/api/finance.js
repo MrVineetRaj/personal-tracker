@@ -3,9 +3,8 @@ import { API_URL } from "@env";
 import { Alert } from "react-native";
 
 const addTransaction = async (token, transaction) => {
-  
   const response = await axios.post(
-    `${API_URL}/finance/add-transaction?token=${token}`,
+    `https://personal-guide-backend.onrender.com/finance/add-transaction?token=${token}`,
     transaction
   );
 
@@ -14,7 +13,7 @@ const addTransaction = async (token, transaction) => {
 
 const getTransactions = async (token) => {
   const response = await axios.get(
-    `${API_URL}/finance/get-transactions?token=${token}`
+    `https://personal-guide-backend.onrender.com/finance/get-transactions?token=${token}`
   );
 
   if (response.data.status !== 200) {
@@ -26,14 +25,14 @@ const getTransactions = async (token) => {
 
 const deleteTransaction = async (token, id) => {
   const response = await axios.delete(
-    `${API_URL}/finance/delete-transaction?token=${token}&id=${id}`
+    `https://personal-guide-backend.onrender.com/finance/delete-transaction?token=${token}&id=${id}`
   );
   return response.data;
 };
 
 const updateTransaction = async (token, id, transaction) => {
   const response = await axios.put(
-    `${API_URL}/finance/update-transaction?token=${token}&id=${id}`,
+    `https://personal-guide-backend.onrender.com/finance/update-transaction?token=${token}&id=${id}`,
     transaction
   );
   return response.data;
